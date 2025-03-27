@@ -8,3 +8,18 @@ document.getElementById("fetchData").addEventListener("click", async () => {
     document.getElementById("result").innerText = "연결 실패!";
   }
 });
+
+// Firebase 연결 확인 API 호출
+document.addEventListener("DOMContentLoaded", function () {
+  const checkFirebaseButton = document.getElementById("checkFirebase");
+
+  checkFirebaseButton.addEventListener("click", async function () {
+      try {
+          const response = await fetch("http://127.0.0.1:8000/firebase-test");
+          const data = await response.json();
+          alert(data.message || data.error);
+      } catch (error) {
+          alert("API 요청 실패: " + error);
+      }
+  });
+});
