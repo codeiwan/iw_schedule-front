@@ -15,7 +15,6 @@ document.getElementById("loginBtn").addEventListener("click", async (event) => {
     const result = await response.json();
     
     if (response.ok) {
-      alert("로그인 성공");
       localStorage.setItem("id_token", result.id_token); // 로그인 성공 시 토큰 저장
       window.location.href = "/schedule.html"; // 일정 페이지로 이동
     } else {

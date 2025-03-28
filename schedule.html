@@ -36,41 +36,5 @@
   </div>
 
   <script src="schedule.js"></script>
-  <script>
-    function showRecordingModal() {
-      const recordingModal = document.createElement('div');
-      recordingModal.style.position = 'fixed';
-      recordingModal.style.top = '50%';
-      recordingModal.style.left = '50%';
-      recordingModal.style.transform = 'translate(-50%, -50%)';
-      recordingModal.style.backgroundColor = 'white';
-      recordingModal.style.padding = '20px';
-      recordingModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-      recordingModal.innerHTML = `
-        <h3>녹음</h3>
-        <button onclick="startRecording()">녹음 시작</button>
-        <button onclick="stopRecording()">녹음 종료</button>
-        <button onclick="closeRecordingModal()">나가기</button>
-      `;
-      document.body.appendChild(recordingModal);
-    }
-
-    function closeRecordingModal() {
-      const modal = document.querySelector('div[style*="fixed"]');
-      if (modal) {
-        document.body.removeChild(modal);
-      }
-    }
-
-    function startRecording() {
-      // 녹음 시작 기능 구현 예정
-      alert('녹음이 시작됩니다.');
-    }
-
-    function stopRecording() {
-      // 녹음 종료 기능 구현 예정
-      alert('녹음이 종료됩니다.');
-    }
-  </script>
 </body>
 </html>

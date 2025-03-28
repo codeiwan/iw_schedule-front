@@ -71,3 +71,122 @@ document.addEventListener("DOMContentLoaded", function() {
 
   showCalendar(currentMonth, currentYear);
 });
+
+let isRecording = false;
+
+function toggleRecordingButton() {
+  const startButton = document.querySelector("button[onclick='startRecording()']");
+  if (isRecording) {
+    startButton.textContent = '녹음 취소';
+    startButton.onclick = cancelRecording;
+  } else {
+    startButton.textContent = '녹음 시작';
+    startButton.onclick = startRecording;
+  }
+}
+
+async function cancelRecording() {
+  console.log('Cancel recording triggered');
+  try {
+    const response = await fetch('http://localhost:8000/cancel_record', {
+      method: 'POST'
+    });
+    console.log('Cancel recording response:', response);
+    const data = await response.json();
+    alert(data.message);
+    isRecording = false;
+    toggleRecordingButton();
+    document.getElementById('startBtn').style.display = 'inline';
+    document.getElementById('cancelBtn').style.display = 'none';
+    document.getElementById('stopBtn').style.display = 'none';
+  } catch (error) {
+    console.error('녹음 취소 오류:', error);
+    alert('녹음 취소 오류: ' + error.message);
+  }
+}
+
+async function startRecording() {
+  console.log('Start recording triggered');
+  try {
+    const response = await fetch('http://localhost:8000/start_record', {
+      method: 'POST'
+    });
+    console.log('Start recording response:', response);
+    const data = await response.json();
+    alert(data.message);
+    isRecording = true;
+    toggleRecordingButton();
+    document.getElementById('startBtn').style.display = 'none';
+    document.getElementById('cancelBtn').style.display = 'inline';
+    document.getElementById('stopBtn').style.display = 'inline';
+  } catch (error) {
+    console.error('녹음 시작 오류:', error);
+    alert('녹음 시작 오류: ' + error.message);
+  }
+}
+
+async function stopRecording() {
+  console.log('Stop recording triggered');
+  try {
+    const response = await fetch('http://localhost:8000/stop_record', {
+      method: 'POST'
+    });
+    console.log('Stop recording response:', response);
+    const data = await response.json();
+    alert(data.message);
+    isRecording = false;
+    toggleRecordingButton();
+    document.getElementById('startBtn').style.display = 'inline';
+    document.getElementById('cancelBtn').style.display = 'none';
+    document.getElementById('stopBtn').style.display = 'none';
+  } catch (error) {
+    console.error('녹음 종료 오류:', error);
+    alert('녹음 종료 오류: ' + error.message);
+  }
+}
+
+function showRecordingModal() {
+  const overlay = document.createElement('div');
+  overlay.classList.add('modal-overlay');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  overlay.style.zIndex = '999';
+  document.body.appendChild(overlay);
+
+  const recordingModal = document.createElement('div');
+  recordingModal.classList.add('recording-modal');
+  recordingModal.style.position = 'fixed';
+  recordingModal.style.top = '50%';
+  recordingModal.style.left = '50%';
+  recordingModal.style.transform = 'translate(-50%, -50%)';
+  recordingModal.style.backgroundColor = 'white';
+  recordingModal.style.padding = '20px';
+  recordingModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+  recordingModal.style.zIndex = '1000';
+  recordingModal.innerHTML = `
+    <button onclick="closeRecordingModal()" style="position: absolute; top: 5px; right: 5px;">&times;</button>
+    <h3>녹음</h3>
+    <button id="startBtn" onclick="startRecording()">녹음 시작</button>
+    <button id="cancelBtn" onclick="cancelRecording()" style="display: none;">녹음 취소</button>
+    <button id="stopBtn" onclick="stopRecording()" style="display: none;">녹음 종료</button>
+  `;
+  document.body.appendChild(recordingModal);
+}
+
+async function closeRecordingModal() {
+  if (isRecording) {
+    await cancelRecording();  // 녹음 중이면 취소
+  }
+  const modal = document.querySelector('.recording-modal');
+  const overlay = document.querySelector('.modal-overlay');
+  if (modal) {
+    document.body.removeChild(modal);
+  }
+  if (overlay) {
+    document.body.removeChild(overlay);
+  }
+}
