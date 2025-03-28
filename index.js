@@ -23,3 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
   });
 });
+
+// 시작하기 버튼 클릭 시 login.html로 리디렉션
+document.getElementById("startBtn").addEventListener("click", function() {
+  window.location.href = "login.html";
+});

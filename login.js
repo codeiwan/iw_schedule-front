@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
           const result = await response.json();
   
           if (response.ok) {
-            alert(result.message); // 로그인 성공 메시지 출력
             window.location.href = "/schedule.html"; // 일정 관리 페이지로 이동
           } else {
             alert("로그인 실패: " + result.detail);
