@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>일정 관리</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>일정 관리</title>
+  <link rel="stylesheet" href="schedule.css">
 </head>
 <body>
-    <h2>일정 관리</h2>
-    <button onclick="fetchSchedules()">일정 가져오기</button>
-    <ul id="scheduleList"></ul>
-    <script src="schedule.js"></script>
+  <h2>일정 관리</h2>
+  <button onclick="fetchSchedules()">일정 가져오기</button>
+  <ul id="scheduleList"></ul>
+  <div id="calendar">
+    <div id="calendar-header">
+      <button id="prev-month">&lt;</button>
+      <span id="month-year"></span>
+      <button id="next-month">&gt;</button>
+    </div>
+    <table id="calendar-body">
+      <thead>
+        <tr>
+          <th>일</th>
+          <th>월</th>
+          <th>화</th>
+          <th>수</th>
+          <th>목</th>
+          <th>금</th>
+          <th>토</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-days">
+        <!-- Calendar days will be injected here by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="schedule.js"></script>
 </body>
 </html>
